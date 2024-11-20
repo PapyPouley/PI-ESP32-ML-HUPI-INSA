@@ -1,0 +1,6 @@
+Projet généré avec edge impulse sur des images issues de CNR Park:http://cnrpark.it/
+
+Utilisation d'une centaine d'images des cam 2 et 3 avec des voitures cachées au fond de l'image ou crop. 
+
+Lien du projet EdgeImpulse:
+https://studio.edgeimpulse.com/public/553109/live
