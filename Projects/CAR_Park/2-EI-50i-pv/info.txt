@@ -1,6 +1,0 @@
-Projet généré avec edge impulse sur des images issues de CNR Park:http://cnrpark.it/
-
-Utilisation d'environ 40 images avec peu de voiture garée. 
-
-Lien du projet EdgeImpulse:
-https://studio.edgeimpulse.com/public/553154/live
