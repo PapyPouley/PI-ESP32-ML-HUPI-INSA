@@ -1,6 +1,6 @@
 /* Includes ---------------------------------------------------------------- */
 #include <Arduino.h>
-#include <a128_inferencing.h>
+#include <a1000-frames_inferencing.h>
 #include "edge-impulse-sdk/dsp/image/image.hpp"
 
 #include "esp_camera.h"
