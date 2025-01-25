@@ -1,0 +1,42 @@
+[
+    {
+        "label": "car",
+        "confidence": 1.0,
+        "x": 32,
+        "y": 24,
+        "width": 16,
+        "height": 16
+    },
+    {
+        "label": "car",
+        "confidence": 1.0,
+        "x": 56,
+        "y": 32,
+        "width": 72,
+        "height": 64
+    },
+    {
+        "label": "car",
+        "confidence": 0.99,
+        "x": 0,
+        "y": 88,
+        "width": 16,
+        "height": 32
+    },
+    {
+        "label": "car",
+        "confidence": 0.95,
+        "x": 40,
+        "y": 112,
+        "width": 8,
+        "height": 8
+    },
+    {
+        "label": "car",
+        "confidence": 0.91,
+        "x": 64,
+        "y": 112,
+        "width": 16,
+        "height": 8
+    }
+]

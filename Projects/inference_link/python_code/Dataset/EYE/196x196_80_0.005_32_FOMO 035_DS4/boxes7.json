@@ -1,0 +1,114 @@
+[
+    {
+        "label": "car",
+        "confidence": 0.97,
+        "x": 161,
+        "y": 14,
+        "width": 14,
+        "height": 49
+    },
+    {
+        "label": "car",
+        "confidence": 0.5,
+        "x": 98,
+        "y": 56,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.93,
+        "x": 42,
+        "y": 84,
+        "width": 42,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.5,
+        "x": 133,
+        "y": 84,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.94,
+        "x": 161,
+        "y": 84,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.95,
+        "x": 98,
+        "y": 91,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.54,
+        "x": 119,
+        "y": 91,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.67,
+        "x": 42,
+        "y": 98,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.89,
+        "x": 63,
+        "y": 98,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.89,
+        "x": 154,
+        "y": 98,
+        "width": 21,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.99,
+        "x": 105,
+        "y": 112,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 1.0,
+        "x": 133,
+        "y": 112,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.99,
+        "x": 147,
+        "y": 119,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 1.0,
+        "x": 84,
+        "y": 126,
+        "width": 7,
+        "height": 7
+    }
+]

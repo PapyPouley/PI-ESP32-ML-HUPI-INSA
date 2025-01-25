@@ -3,15 +3,18 @@
 #include <a1000-frames_inferencing.h>
 #include "edge-impulse-sdk/dsp/image/image.hpp"
 
-//#define USED_SD
+#define USED_SD // Comment if you dont want to take image from SD card but from camera
 #ifdef USED_SD
+    #define NB_Image 11
+    String ImageFileName[] = {"/image1.jpg","/image2.jpg","/image3.jpg","/image4.jpg","/image5.jpg","/image6.jpg","/image7.jpg","/image8.jpg","/image9.jpg","/image10.jpg", "/image11.jpg"};
+    int ImageIndex = 0;
     #include <SD_MMC.h>
 #endif
 
 #include "esp_camera.h"
 
 #define CONFIG_ESP32_CAMERA_DEBUG 1
-#define THRESHOLD 0.9
+#define THRESHOLD 0.5
 
 //Define default : 
 #define PWDN_GPIO_NUM     0
@@ -144,7 +147,7 @@ static camera_config_t camera_config = {
 /* Function definitions ------------------------------------------------------- */
 bool ei_camera_init(void);
 void ei_camera_deinit(void);
-camera_fb_t * ei_camera_capture(uint32_t img_width, uint32_t img_height, uint8_t *out_buf) ;
+camera_fb_t * ei_camera_capture(uint32_t img_width, uint32_t img_height, uint8_t *out_buf);
 static int ei_camera_get_data(size_t offset, size_t length, float *out_ptr);
 
 void sendImage(uint8_t *buf);
@@ -160,17 +163,16 @@ void setup()
     Serial.begin(115200);
     //comment out the below line to start inference immediately after upload
     while (!Serial);
-    Serial.println("Edge Impulse Inferencing Demo");
     if (ei_camera_init() == false) {
         ei_printf("Failed to initialize Camera!\r\n");
     }
     else {
-        ei_printf("Camera initialized\r\n");
+        //ei_printf("Camera initialized\r\n");
     }
 
     #ifdef USED_SD
         // Configuration des broches SD
-        if (!SD_MMC.setPins(39, 38, 40)) { // CLK = GPIO 39, CMD = GPIO 38, DATA0 = GPIO 40
+        if (!SD_MMC.setPins(39, 38, 40)) { // CLK = GPIO 39, CMD = GPIO 38, DATA0 = GPIO 40 => for esp Eye
             Serial.println("Erreur lors de la configuration des broches !");
             return;
         }
@@ -180,59 +182,14 @@ void setup()
             Serial.println("Erreur d'initialisation de la carte SD !");
             while (1);
         }
-        Serial.println("Carte SD initialisée avec succès.");
     #endif
 
-    ei_printf("\nStarting now\n");
 }
 
-#ifdef USED_SD
-void save_image_and_boxes(uint8_t *buf, ei_impulse_result_t result) {
-    // Vérification de la carte SD
-    if (!SD_MMC.begin()) {
-        Serial.println("Erreur : Carte SD non détectée !");
-        return;
-    }
-
-    String time = String(millis());
-    // Générer un nom de fichier unique pour l'image
-    String imageFileName = "/" + time + "_capture.jpg";
-    File imageFile = SD_MMC.open(imageFileName.c_str(), FILE_WRITE);
-    if (!imageFile) {
-        Serial.println("Erreur lors de l'ouverture du fichier pour l'image !");
-        return;
-    }
-
-    // Sauvegarder l'image capturée (au format JPEG)
-    imageFile.write(buf, EI_CLASSIFIER_INPUT_WIDTH * EI_CLASSIFIER_INPUT_HEIGHT * EI_CAMERA_FRAME_BYTE_SIZE);
-    imageFile.close();
-    Serial.println("Image sauvegardée avec succès sur la carte SD : " + imageFileName);
-
-    File jsonFile = SD_MMC.open("/" + time + "_boxes.json", FILE_WRITE);
-    if (!jsonFile) {
-        Serial.println("Erreur lors de la création du fichier JSON !");
-    } else {
-        jsonFile.print("[");
-        for (uint32_t i = 0; i < result.bounding_boxes_count; i++) {
-            ei_impulse_result_bounding_box_t bb = result.bounding_boxes[i];
-            if (bb.value < THRESHOLD) {
-                continue;
-            }
-            jsonFile.printf(
-                "{\"label\": \"%s\", \"confidence\": %.2f, \"x\": %u, \"y\": %u, \"width\": %u, \"height\": %u}",
-                bb.label, bb.value, bb.x, bb.y, bb.width, bb.height
-            );
-            if (i < result.bounding_boxes_count - 1) {
-                jsonFile.print(",");
-            }
-        }
-        jsonFile.print("]");
-        jsonFile.close();
-        Serial.println("Données sauvegardées dans boxes.json !");
-    }
-}
-#endif
-
+/***
+ * @brief Serial event handler for serial communication
+ * 
+ */
 void serialEvent() {
     char inChar = (char)Serial.read();
     switch (inChar)
@@ -252,20 +209,84 @@ void serialEvent() {
     }
 }
 
+#ifdef USED_SD
+
+/*** 
+* @brief Load an image from SD card
+*
+* @param[in] fb : camera_fb_t structure
+*/
+void LoadImage(camera_fb_t *fb) {
+    File file = SD_MMC.open(ImageFileName[ImageIndex], FILE_READ);
+    if (!file) {
+        Serial.println("Erreur lors de l'ouverture du fichier !");
+        return;
+    }
+
+    // Taille du fichier
+    size_t size = file.size();
+    //Serial.println("Taille du fichier JPEG : " + String(size));
+    //Serial.println("Taille maximale du tampon (fb->len) : " + String(fb->len));
+
+    // Allouer dynamiquement un buffer pour les données JPEG
+    uint8_t *jpeg_buf = (uint8_t *)malloc(size);
+    if (!jpeg_buf) {
+        Serial.println("Error allocating memory !");
+        file.close();
+        return;
+    }
+
+    // Lire les données JPEG dans le buffer
+    size_t bytesRead = file.read(jpeg_buf, size);
+    file.close();
+
+    if (bytesRead != size) {
+        Serial.println("Error reading file !");
+        free(jpeg_buf);
+        return;
+    }
+
+    // Free the old buffer
+    if (fb->buf) {
+        free(fb->buf); 
+    }
+
+    fb->buf = jpeg_buf;
+    fb->len = size;                   // Taille des données JPEG
+    fb->format = PIXFORMAT_JPEG;      // Format JPEG compressé
+    fb->width = EI_CAMERA_RAW_FRAME_BUFFER_COLS;
+    fb->height = EI_CAMERA_RAW_FRAME_BUFFER_ROWS;
+
+    ImageIndex++;
+    if(ImageIndex == NB_Image){
+        ImageIndex = 0;
+    }
+}
+#endif
+
+/***
+ * @brief Send image data to serial
+ * 
+ * @param[in] buf : image data
+ */
 void sendImage(uint8_t *buf){
-    // Ajouter un marqueur de début
+    // Add start image marker
     Serial.print("<start_image>");
     
-    // Envoyer l'image en binaire
+    // Send image data to serial in binary format
     Serial.write(buf, EI_CAMERA_RAW_FRAME_BUFFER_COLS * EI_CAMERA_RAW_FRAME_BUFFER_ROWS * EI_CAMERA_FRAME_BYTE_SIZE);
 
-    // Ajouter un marqueur de fin
+    // Add end image marker
     Serial.print("<end_image>");
-    esp_camera_fb_return(fb);
 }
 
+/***
+ * @brief Send bounding boxes to serial
+ * 
+ * @param[in] result : result of inference
+ */
 void sendBox(ei_impulse_result_t result){
-    // Ajouter un marqueur de début
+    // Add start box marker
     Serial.print("<start_box>");
     Serial.print("<");
     Serial.print(result.bounding_boxes_count);
@@ -277,25 +298,31 @@ void sendBox(ei_impulse_result_t result){
             continue;
         }
         Serial.print("  ");
-        Serial.print(bb.label);  // Affiche le label
+        Serial.print(bb.label);   // Print the label
         Serial.print(" (");
-        Serial.print(bb.value, 2);  // Affiche la valeur avec 2 décimales
+        Serial.print(bb.value, 2);  // Print the confidence level
         Serial.print(") [ x: ");
-        Serial.print(bb.x);
+        Serial.print(bb.x);     // Print the x coordinate
         Serial.print(", y: ");
-        Serial.print(bb.y);
+        Serial.print(bb.y);    // Print the y coordinate
         Serial.print(", width: ");
-        Serial.print(bb.width);
+        Serial.print(bb.width);     // Print the width
         Serial.print(", height: ");
-        Serial.print(bb.height);
+        Serial.print(bb.height);   // Print the height
         Serial.println(" ]");  
     }
-    // Ajouter un marqueur de fin
+    // Add end box marker
     Serial.print("<end_box>");
 }
 
+
+/***
+ * @brief Run inferencing
+ * 
+ * @return true if inferencing is successful
+ */
 bool runInference(){
-    esp_camera_fb_return(fb);
+    esp_camera_fb_return(fb); // Free the frame buffer
     snapshot_buf = (uint8_t*)malloc(EI_CAMERA_RAW_FRAME_BUFFER_COLS * EI_CAMERA_RAW_FRAME_BUFFER_ROWS * EI_CAMERA_FRAME_BYTE_SIZE);
 
     // check if allocation was successful
@@ -323,6 +350,7 @@ bool runInference(){
     free(snapshot_buf);
     return true;
 }
+
 /**
 * @brief      Get data and run inferencing
 *
@@ -391,7 +419,7 @@ void ei_camera_deinit(void) {
  * @param[in]  out_buf       pointer to store output image, NULL may be used
  *                           if ei_camera_frame_buffer is to be used for capture and resize/cropping.
  *
- * @retval     false if not initialised, image captured, rescaled or cropped failed
+ * @retval    pointer to captured image
  *
  */
 camera_fb_t * ei_camera_capture(uint32_t img_width, uint32_t img_height, uint8_t *out_buf) {
@@ -402,19 +430,22 @@ camera_fb_t * ei_camera_capture(uint32_t img_width, uint32_t img_height, uint8_t
         return NULL;
     }
 
-    camera_fb_t *fb = esp_camera_fb_get();
-
+    #if defined(USED_SD)
+        fb = esp_camera_fb_get();
+        LoadImage(fb);
+    #else
+        fb = esp_camera_fb_get();
+    #endif
+    
     if (!fb) {
         ei_printf("Camera capture failed\n");
         return NULL;
     }
 
-   bool converted = fmt2rgb888(fb->buf, fb->len, PIXFORMAT_JPEG, snapshot_buf);
-
-   if(!converted){
-       ei_printf("Conversion failed\n");
-       return NULL;
-   }
+    if(!fmt2rgb888(fb->buf, fb->len, PIXFORMAT_JPEG, snapshot_buf)){
+        ei_printf("Conversion failed\n");
+        return NULL;
+    }
 
     if ((img_width != EI_CAMERA_RAW_FRAME_BUFFER_COLS)
         || (img_height != EI_CAMERA_RAW_FRAME_BUFFER_ROWS)) {

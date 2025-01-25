@@ -1,0 +1,26 @@
+[
+    {
+        "label": "car",
+        "confidence": 0.73,
+        "x": 8,
+        "y": 0,
+        "width": 16,
+        "height": 8
+    },
+    {
+        "label": "car",
+        "confidence": 1.0,
+        "x": 0,
+        "y": 16,
+        "width": 104,
+        "height": 56
+    },
+    {
+        "label": "car",
+        "confidence": 0.89,
+        "x": 112,
+        "y": 32,
+        "width": 16,
+        "height": 16
+    }
+]

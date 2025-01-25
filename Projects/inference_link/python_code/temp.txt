@@ -1,0 +1,72 @@
+
+/*
+camera_fb_t *convert_to_camera_fb(uint8_t *buffer, uint32_t width, uint32_t height) {
+    // Configurer le buffer `camera_fb_t`
+    fb->width = width;
+    fb->height = height;
+    fb->buf = buffer;
+    fb->len = width * height * 3; // Taille de l'image RGB888
+    fb->format = PIXFORMAT_RGB888; // Format RGB888
+
+    return fb;
+}
+*/
+
+void receive_and_infer_image() {
+    String start_marker = "<start_image>";
+    String end_marker = "<end_image>";
+    String received_data = "";
+    bool receiving = false;
+
+    while (true) {
+        if (Serial.available()) {
+            char c = Serial.read();
+            //Convert serial byte to string
+            String str = String(c);
+            received_data += str;
+
+            if (received_data.startsWith(start_marker)) {
+                Serial.println("Receiving image...");
+                receiving = true;
+                received_data = ""; // Réinitialiser les données
+            } else if (received_data.endsWith(end_marker)) {
+                Serial.println("Image reçue avec succès !");
+                // Supprimer le marqueur de fin de la chaîne
+                int end_position_to_erase = received_data.indexOf(end_marker);
+                String image_data = received_data.substring(0, end_position_to_erase);
+                // Réinitialiser la réception
+
+                received_data = "";
+                receiving = false;
+
+                // Allouer un buffer pour le stockage temporaire de l'image
+                int data_length = image_data.length();
+                uint8_t *image_buffer = (uint8_t *)malloc(data_length);
+                if (image_buffer == NULL) {
+                    Serial.println("Erreur : échec d'allocation mémoire.");
+                    return;
+                }
+
+                // Copier les données dans le buffer
+                memcpy(image_buffer, image_data.c_str(), data_length);
+                // Traiter l'image reçue
+                fb->buf = image_buffer;
+                //process_image((uint8_t*)received_data.c_str(), received_data.length());
+                Serial.printf("Break");
+                break;
+            }
+        }
+    }
+}
+
+/*
+void process_image(uint8_t *image_data, size_t len) {
+    // Décoder l'image et effectuer l'inférence
+    // Exemple : utiliser l'inférence Edge Impulse
+    ei_impulse_result_t result;
+    if (run_inference(image_data, len, &result) == 0) {
+        sendBox(result);
+    } else {
+        Serial.println("<start_box><0><end_box>"); // Aucune boîte détectée
+    }
+}*/
