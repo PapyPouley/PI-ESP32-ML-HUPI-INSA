@@ -1,3 +1,0 @@
-Ce fichier contient l'ensemble des liens permettant de télécharger les datasets utilisés dans les projets:
-
-- http://cnrpark.it/

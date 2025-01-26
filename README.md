@@ -1,21 +1,30 @@
-# Computer vision on ESP 32 _ HUPI INSA RENNES
+# Computer Vision on ESP32 _ HUPI INSA RENNES
 
-Ce projet s'inscrit dans le cadre du projet industriel de l'INSA de Rennes. Il a pour but l'intégration de modèle de computer vision sur un microcontrolleur de type ESP32.
+This project is part of the industrial project of INSA Rennes. Its goal is to integrate computer vision models into an ESP32 microcontroller.
 
+### Prerequisites
 
-### Pré-requis
+Using the PlatformIO is recommended.
 
-L'utilisation de l'IDE d'arduino ou de platform IO est recommandée.
+## Getting Started
 
-## Démarrage
+### Project organization
+The main folder is separated into three part : 
+- BoardsInfo : Further information and json files for implementing ESP 32 EYE
+- LIB : Contains all models librairies in .zip and tflite
+- Projects : Divided in two projects:
+   - Inference : Default program who infere model from camera and send results into the serial monitor
+   - Inference_link : Project to get and store the result infered by the ESP. Need to load ESP3-SERIAL on boards.
 
-Pour chaque projet il est nécéssaire de compresser en .ZIP le dossier de lib et de l'ajouter à l'IDE.
+## Built With
 
-## Fabriqué avec
-La plus part des projets ont été réalisés avec * [EdgeImpulse](https://studio.edgeimpulse.com/).
-Ainsi que l'IDE d'Arduino ou l'extension Platform IO sur VSCode.
+Most of the models were developed using * [EdgeImpulse](https://studio.edgeimpulse.com/).  
+Most of the models are from this link :
+- [Dataset4](https://studio.edgeimpulse.com/public/553109/live)
+- [COCO](https://studio.edgeimpulse.com/public/575392/live)
 
-## Auteurs
+Additionally, the PlatformIO extension for VSCode was used. To use ESP32 S3 Eye, it's required to put the file esp32-s3-devkitc1-n8r8.json from https://github.com/PapyPouley/PI-ESP32-ML-HUPI-INSA/blob/main/BoardsInfo/EYE/esp32-s3-devkitc1-n8r8.json or in available in the folder ./boardInfo folder to : Mac/linux ~/.platformio/platforms/espressif32/boards or Win C:\Users\<UserName>\.platformio\platforms\espressif32\boards
 
-Ce projet a été réalisés par : https://github.com/PapyPouley/PI-ESP32-ML-HUPI-INSA/contirubors
+## Authors
 
+This project was created by: https://github.com/PapyPouley/PI-ESP32-ML-HUPI-INSA/contributors  
