@@ -18,8 +18,8 @@ original_width = 240
 original_height = 240
 
 # Image size used for the inference
-inference_width = 230
-inference_height = 230
+inference_width = 196
+inference_height = 196
 
 # Offset width if we need to crop the image
 offset_width = 0
@@ -276,7 +276,7 @@ if __name__ == "__main__":
     for i in range(1, 12):
         index = i
         try:
-            ser = serial.Serial(serial_port, baud_rate, timeout=2)
+            ser = serial.Serial(serial_port, baud_rate, timeout=4)
 
             # Step 1: Send 0 to start the inference
             if not send_command(ser, "0", "1"):

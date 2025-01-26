@@ -217,16 +217,15 @@ void serialEvent() {
     switch (inChar)
     {
     case '0':
-        Serial.println(runInference());
+        Serial.println(runInference()); // Print result to know when inference is done
         break;
     case '1':
-        sendImage(fb->buf);
+        sendImage(fb->buf); // Send image to serial
         break;
     case '2':
-        sendBox(result);
+        sendBox(result); // Send bounding boxes to serial
         break;
     default:
-        Serial.println("Run!");
         break;
     }
 }
