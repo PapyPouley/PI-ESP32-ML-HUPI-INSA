@@ -9,6 +9,22 @@
     String ImageFileName[] = {"/image1.jpg","/image2.jpg","/image3.jpg","/image4.jpg","/image5.jpg","/image6.jpg","/image7.jpg","/image8.jpg","/image9.jpg","/image10.jpg", "/image11.jpg"};
     int ImageIndex = 0;
     #include <SD_MMC.h>
+    #if EYE // CLK = GPIO 39, CMD = GPIO 38, DATA0 = GPIO 40 => for esp Eye
+        #define SD_CLK 39
+        #define SD_CMD 38
+        #define SD_DATA0 40
+    #elif SENSE
+        #define SD_CLK 7
+        #define SD_CMD 9
+        #define SD_DATA0 8
+    #elif CAM
+        #define SD_CLK 14
+        #define SD_CMD 15
+        #define SD_DATA0 2
+        #define SD_DATA1 4
+        #define SD_DATA2 12
+        #define SD_DATA3 13
+    #endif
 #endif
 
 #include "esp_camera.h"
@@ -172,7 +188,13 @@ void setup()
 
     #ifdef USED_SD
         // Configuration des broches SD
-        if (!SD_MMC.setPins(39, 38, 40)) { // CLK = GPIO 39, CMD = GPIO 38, DATA0 = GPIO 40 => for esp Eye
+        bool result= false;
+        #ifdef SD_DATA1
+            result = SD_MMC.setPins(SD_CLK, SD_CMD, SD_DATA0, SD_DATA1, SD_DATA2, SD_DATA3);
+        #else
+            result = SD_MMC.setPins(SD_CLK, SD_CMD, SD_DATA0);
+        #endif
+        if (!result) { 
             Serial.println("Erreur lors de la configuration des broches !");
             return;
         }
