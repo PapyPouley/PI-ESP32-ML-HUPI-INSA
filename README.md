@@ -25,11 +25,11 @@ The main folder is divided into three parts:
 ## Built With
 
 Most of the models were developed using **[EdgeImpulse](https://studio.edgeimpulse.com/)**.  
-Relevant datasets can be found here:  
-- [Dataset4](https://studio.edgeimpulse.com/public/553109/live)  
-- [COCO](https://studio.edgeimpulse.com/public/575392/live)  
+Relevant models can be found here:  
+- [Dataset4-model](https://studio.edgeimpulse.com/public/553109/live)  
+- [COCO-model](https://studio.edgeimpulse.com/public/575392/live)  
 
-Development was carried out using the PlatformIO extension for Visual Studio Code.
+Development was carried out using the PlatformIO extension for Visual Studio Code. To use ESP32 S3 Eye, it's required to put the file esp32-s3-devkitc1-n8r8.json from https://github.com/PapyPouley/PI-ESP32-ML-HUPI-INSA/blob/main/BoardsInfo/EYE/esp32-s3-devkitc1-n8r8.json or in available in the folder ./boardInfo folder to : Mac/linux ~/.platformio/platforms/espressif32/boards or Win C:\Users\<UserName>\.platformio\platforms\espressif32\boards
 
 ---
 
