@@ -1,12 +1,15 @@
 # Computer Vision on ESP32 _ HUPI INSA RENNES
 
 This project is part of the industrial project at INSA Rennes. Its objective is to integrate computer vision models into an ESP32 microcontroller.
+This repository contains a part of all the models we trained for the project.
 
 ---
 
 ### Prerequisites
 
-Using PlatformIO is highly recommended to ensure compatibility and ease of development.
+An ESP32 with its associated camera. Models have been tested with 3 differents boards : ESP32-CAM, ESP-S3-EYE and ESP-S3-SENSE.
+Using VS code extension [PlatformIO](https://platformio.org/) is highly recommended to ensure compatibility and ease of development.
+Using [SenseCraft ToolKit](https://seeed-studio.github.io/SenseCraft-Web-Toolkit/#/setup/process) can be useful for quick deploymenent on ESP-S3-SENSE only from the libraries in .tflite.
 
 ---
 
@@ -15,10 +18,17 @@ Using PlatformIO is highly recommended to ensure compatibility and ease of devel
 ### Project Organization  
 The main folder is divided into three parts:  
 - **BoardsInfo**: Contains additional information and JSON files required for implementing the ESP32-EYE.  
-- **LIB**: Includes all model libraries in `.zip` format and pre-trained `.tflite` files.  
+- **LIB**: Includes model libraries in `.zip` format and pre-trained `.tflite` files.
+   - Every model is entitled as follow : [size of training images]_[nb of epochs]_[learning rate]_[batch size]_[base model]_[dataset]
+   - 4 datasets have been used for training all these models, there are different subsets of the [CNR Park dataset](http://cnrpark.it/)
+     - DS2 : ~80 images of subjective "high quality"
+     - DS4 : ~1000 images without any manual sorting
 - **Projects**: Subdivided into two distinct projects:  
    - **Inference**: The default program that performs inference using the model, captures data from the camera, and sends results to the serial monitor.  
    - **Inference_link**: A program designed to retrieve and store inference results from the ESP32. Requires the **ESP3-SERIAL** module to be loaded onto the boards.  
+
+The model with the best performance is : 196x196_80_0.005_32_FOMO 035_DS4. 
+Among all these models, some cannot be deployed on an ESP32 : models trained with other base model than FOMO, and some cannot run an inference on the ESP32 (models with image sizes above 230x230 pixels or working with float32).
 
 ---
 
