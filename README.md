@@ -21,9 +21,9 @@ Using [SenseCraft ToolKit](https://seeed-studio.github.io/SenseCraft-Web-Toolkit
 ### Project Organization  
 
 The main folder is divided into three parts:  
-- **BoardsInfo**: Contains additional information and JSON files required for implementing the ESP32-EYE.  
+- **BoardsInfo**: Contains additional information and JSON files required for implementing the ESP32-S3-EYE.  
 - **LIB**: Includes model libraries in `.zip` format and pre-trained `.tflite` files.
-   - Every model is entitled as follow : [size of training images]_[nb of epochs]_[learning rate]_[batch size]_[base model]_[dataset]
+   - Every model is entitled as follow : `size of training images_nb of epochs_learning rate_batch size_base model_dataset`
    - 4 datasets have been used for training all these models, there are different subsets of the [CNR Park dataset](http://cnrpark.it/)
      - DS2 : ~80 images of subjective "high quality"
      - DS4 : ~1000 images without any manual sorting
@@ -41,10 +41,10 @@ Among all these models, some cannot be deployed on an ESP32 : models trained wit
 
 Most of the models were developed using **[EdgeImpulse](https://studio.edgeimpulse.com/)**.  
 Relevant models can be found here:  
-- [Dataset4-model](https://studio.edgeimpulse.com/public/553109/live)  
+- [Dataset4-model](https://studio.edgeimpulse.com/public/575010/live)
 - [COCO-model](https://studio.edgeimpulse.com/public/575392/live)  
 
-Development was carried out using the PlatformIO extension for Visual Studio Code. To use ESP32 S3 Eye, it's required to put the file esp32-s3-devkitc1-n8r8.json from https://github.com/PapyPouley/PI-ESP32-ML-HUPI-INSA/blob/main/BoardsInfo/EYE/esp32-s3-devkitc1-n8r8.json or in available in the folder ./boardInfo folder to : Mac/linux `~/.platformio/platforms/espressif32/boards` or Win `C:\Users\<UserName>\.platformio\platforms\espressif32\boards`
+Development was carried out using the PlatformIO extension for Visual Studio Code. To use ESP32 S3 EYE, it's required to put the file esp32-s3-devkitc1-n8r8.json from https://github.com/PapyPouley/PI-ESP32-ML-HUPI-INSA/blob/main/BoardsInfo/EYE/esp32-s3-devkitc1-n8r8.json or in available in the folder ./boardInfo folder to : Mac/linux `~/.platformio/platforms/espressif32/boards` or Win `C:\Users\<UserName>\.platformio\platforms\espressif32\boards`
 
 The configuration of both projects (inference and inference_link) is controlled by the file : PI-ESP32-ML-HUPI-INSA/Project/[project]/platformio.ini. This file allows an user to select the board and the model them want to deploy in it. To select a library, modify the library path in the platformio.ini file, line 15 (lib_deps = ...).
 
