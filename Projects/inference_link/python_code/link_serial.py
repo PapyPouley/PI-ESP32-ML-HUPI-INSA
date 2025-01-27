@@ -276,7 +276,7 @@ if __name__ == "__main__":
     for i in range(1, 12):
         index = i
         try:
-            ser = serial.Serial(serial_port, baud_rate, timeout=4)
+            ser = serial.Serial(serial_port, baud_rate, timeout=2)
 
             # Step 1: Send 0 to start the inference
             if not send_command(ser, "0", "1"):

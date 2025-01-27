@@ -218,6 +218,8 @@ void serialEvent() {
     {
     case '0':
         Serial.println(runInference()); // Print result to know when inference is done
+        ei_printf("Predictions (DSP: %d ms., Classification: %d ms., Anomaly: %d ms.): \n",
+                result.timing.dsp, result.timing.classification, result.timing.anomaly);
         break;
     case '1':
         sendImage(fb->buf); // Send image to serial

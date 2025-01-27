@@ -1,0 +1,138 @@
+[
+    {
+        "label": "car",
+        "confidence": 0.93,
+        "x": 56,
+        "y": 7,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.97,
+        "x": 21,
+        "y": 21,
+        "width": 28,
+        "height": 28
+    },
+    {
+        "label": "car",
+        "confidence": 0.91,
+        "x": 70,
+        "y": 21,
+        "width": 14,
+        "height": 14
+    },
+    {
+        "label": "car",
+        "confidence": 0.8,
+        "x": 49,
+        "y": 28,
+        "width": 14,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.71,
+        "x": 112,
+        "y": 28,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.83,
+        "x": 126,
+        "y": 28,
+        "width": 21,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.83,
+        "x": 161,
+        "y": 35,
+        "width": 14,
+        "height": 14
+    },
+    {
+        "label": "car",
+        "confidence": 0.94,
+        "x": 56,
+        "y": 42,
+        "width": 21,
+        "height": 14
+    },
+    {
+        "label": "car",
+        "confidence": 0.71,
+        "x": 112,
+        "y": 49,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.98,
+        "x": 84,
+        "y": 56,
+        "width": 14,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.5,
+        "x": 133,
+        "y": 56,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.91,
+        "x": 161,
+        "y": 56,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 1.0,
+        "x": 105,
+        "y": 63,
+        "width": 21,
+        "height": 14
+    },
+    {
+        "label": "car",
+        "confidence": 1.0,
+        "x": 140,
+        "y": 84,
+        "width": 28,
+        "height": 28
+    },
+    {
+        "label": "car",
+        "confidence": 0.88,
+        "x": 35,
+        "y": 119,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.5,
+        "x": 168,
+        "y": 133,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.71,
+        "x": 70,
+        "y": 140,
+        "width": 7,
+        "height": 7
+    }
+]

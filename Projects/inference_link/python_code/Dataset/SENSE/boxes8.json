@@ -1,0 +1,98 @@
+[
+    {
+        "label": "car",
+        "confidence": 0.98,
+        "x": 168,
+        "y": 14,
+        "width": 7,
+        "height": 42
+    },
+    {
+        "label": "car",
+        "confidence": 0.89,
+        "x": 147,
+        "y": 42,
+        "width": 7,
+        "height": 14
+    },
+    {
+        "label": "car",
+        "confidence": 0.59,
+        "x": 14,
+        "y": 77,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.71,
+        "x": 98,
+        "y": 77,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.88,
+        "x": 119,
+        "y": 77,
+        "width": 14,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.92,
+        "x": 42,
+        "y": 84,
+        "width": 21,
+        "height": 14
+    },
+    {
+        "label": "car",
+        "confidence": 0.88,
+        "x": 147,
+        "y": 84,
+        "width": 14,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 1.0,
+        "x": 168,
+        "y": 84,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 1.0,
+        "x": 7,
+        "y": 91,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.88,
+        "x": 112,
+        "y": 91,
+        "width": 7,
+        "height": 7
+    },
+    {
+        "label": "car",
+        "confidence": 0.85,
+        "x": 154,
+        "y": 98,
+        "width": 21,
+        "height": 21
+    },
+    {
+        "label": "car",
+        "confidence": 0.83,
+        "x": 133,
+        "y": 119,
+        "width": 14,
+        "height": 7
+    }
+]
